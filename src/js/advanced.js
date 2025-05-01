@@ -3,13 +3,13 @@ export function orderByProps(obj, order) {
   const otherKeys = [];
 
   for (const key of order) {
-    if (obj.hasOwnProperty(key)) {
+    if (!!obj[key]) {
       orderedKeys.push(key);
     }
   }
 
   for (const key in obj) {
-    if (!order.includes(key) && obj.hasOwnProperty(key)) {
+    if (!order.includes(key) && obj[key]) {
       otherKeys.push(key);
     }
   }
@@ -20,3 +20,17 @@ export function orderByProps(obj, order) {
   return sortedKeys.map(key => ({ key, value: obj[key] }));
 }
 
+
+export function destructuring(item) {
+  if (item.special === undefined) {
+    throw new Error('No item specified');
+  }
+  return item.special.map((x) => {
+    return {
+      id: x.id,
+      name: x.name,
+      description: x.description || 'Описание недоступно',
+      icon: x.icon
+    }
+  });
+}
